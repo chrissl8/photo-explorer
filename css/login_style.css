@@ -1,0 +1,55 @@
+body {
+	background-color: #303030;
+    background-image: url('../images/subtle-tight-lines-dark-bg.png');
+}
+
+/*
+Main Login Div
+*/
+.login-pane {
+	font-family: 'Droid Serif', serif;
+	background-color: white;
+	background-image: url('../images/wtc_bg.jpg');
+    margin: 10%;
+    padding: 5%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    text-shadow: 0px 0px 10px #303030;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #303030;
+    box-shadow: 0px 0px 20px #303030 inset;
+}
+
+.login-pane h1 {
+	font-size: 3em;
+}
+
+.insta-link {
+	background-color: #5E8AFF;
+    display: inline-block;
+    padding: 2%;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #5E8AFF;
+    box-shadow: 0px 0px 10px #5E8AFF;
+}
+
+.login-pane a {
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+footer .footer-text {
+	font-family: 'Droid Serif', serif;
+    color: white;
+    font-size: 1.2em;
+    text-align: center;
+    text-shadow: 0px 0px 10px #303030;
+}
+
+
+
