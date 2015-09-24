@@ -76,6 +76,12 @@ body {
     font-weight: 700;
 }
 
+#log-out-link {
+    color: #454F80;
+    font-weight: 700;
+    text-align: center;
+}
+
 .app-container .photo-container .photo .caption {
     font-size: 0.7em;
 }

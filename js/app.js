@@ -8,12 +8,13 @@ $(document).ready(function(){
 	var maxTimeStamp;
 
 	console.log("Instagram Access Token is: " + currentAuthToken);
-	
+	/*
 	$('#log-out-link').on('click tap', function() {
 		currentAuthToken = "";
 		logOutOfIG();
 		window.location.replace("login.html");
 	});
+	*/
 
 	$('#submit-date-range').submit(function(event){
 		event.preventDefault();
@@ -54,10 +55,11 @@ $(document).ready(function(){
 
 });
 
+/*
 function logOutOfIG() {
 	$.get('http://instagram.com/accounts/logout/');
 }
-
+*/
 
 function getAuthCodeFromURL(variable)
 {
