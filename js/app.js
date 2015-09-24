@@ -55,17 +55,7 @@ $(document).ready(function(){
 });
 
 function logOutOfIG() {
-	$.ajax({
-    url: "https://instagram.com/accounts/logout/",
-    data: "",
-    type: 'POST',
-    success: function () {
-        alert("Logged Out of IG");
-    },
-    error: function(e) {
-        alert('Error: '+e);
-    }  
-});
+	$.get('http://instagram.com/accounts/logout/');
 }
 
 
@@ -95,7 +85,14 @@ function getPhotoJSON(currentToken, minStamp, maxStamp) {
 		//$('.search-results').html(searchResults);
 
 		var html = '';
-
+		if(result.data.length == 0)
+		{
+			$('.no-photos').show();
+		}
+		else
+		{
+			$('.no-photos').hide();
+		}
 		$.each(result.data, function(i, item){
 			console.log(item);
 			html += '<div class="photo">';
@@ -105,7 +102,7 @@ function getPhotoJSON(currentToken, minStamp, maxStamp) {
 			html += '<p>' + item.likes.count + ' likes.</p>';
 			html += '</div>';
 		});
-		html += '<a href="' + result.pagination.next_url + '">Next Result Set</a>';
+		//html += '<a href="' + result.pagination.next_url + '">Next Result Set</a>';
 		$('.photo-container').html(html);
 	})
 }
