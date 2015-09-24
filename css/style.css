@@ -80,6 +80,26 @@ body {
     font-size: 0.7em;
 }
 
+/* Responsive CSS Media Query for Mobile Devices */
+@media only screen  
+and (max-device-width : 375px) 
+and (orientation : portrait) {
+
+    .app-container {
+        margin: 0px 2% 0px 2%;
+    }
+
+    .app-container .header-pane h1 {
+        font-size: 1.5em;
+    }
+
+    .app-container .photo-container .photo {
+        margin: .5em;
+        font-size: 0.9em;
+    }
+
+}
+
 
 
 
