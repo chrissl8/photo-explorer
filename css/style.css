@@ -1,3 +1,9 @@
+/*
+Chris's Photo Explorer: style.css
+Chris Slaight, 2015
+Style sheet for main application
+*/
+
 body {
 	background-color: #303030;
     background-image: url('../images/subtle-tight-lines-dark-bg.png');
@@ -13,7 +19,7 @@ body {
     box-shadow: 0px -8px 20px black inset;
     border: 1px solid #30302E;
     border-radius: 10px;
-    /* background-image: url('../images/paper.jpg'); */
+    background-image: url('../images/whitepaper.jpg');
 }
 
 .app-container .header-pane {

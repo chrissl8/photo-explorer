@@ -1,66 +1,39 @@
-var currentAuthToken;
+/*
+Chris's Photo Explorer: app.js
+Chris Slaight, 2015
+JavaScript/jQuery/AJAX logic to search, retrieve and display posts from Instagram JSON objects
+*/
 
+var currentAuthToken; //Global variable to hold current Auth Token from IG API
+
+//On document load
 $(document).ready(function(){
 
-	var returnedURL = window.location.href;
-	currentAuthToken = getAuthCodeFromURL(returnedURL);
-	var minTimeStamp;
-	var maxTimeStamp;
-
-	console.log("Instagram Access Token is: " + currentAuthToken);
-	/*
-	$('#log-out-link').on('click tap', function() {
-		currentAuthToken = "";
-		logOutOfIG();
-		window.location.replace("login.html");
-	});
-	*/
-
+	var returnedURL = window.location.href; //Var to store the current URL
+	currentAuthToken = getAuthCodeFromURL(returnedURL); //Strip out Auth Token from URL (function below)
+	
+	console.log("Instagram Access Token is: " + currentAuthToken); //Debug: display current Token value
+	
 	$('#submit-date-range').submit(function(event){
-		event.preventDefault();
-		console.log("Button works!");
+		event.preventDefault(); //Prevent page refresh onsubmit
+		var selectedDate = $('#photo-datepicker').datepicker("getDate"); //Get date value from date picker
+		var tomorrow = new Date(selectedDate.getTime() + 24*60*60*1000); //Create second var to hold selected date + 1 day
 
-		//console.log("Min date is " + $('#min-datepicker').datepicker("getDate") / 1000);
-		//minTimeStamp = $('#min-datepicker').datepicker("getDate") / 1000;
-		//console.log("Max date is " + $('#max-datepicker').datepicker("getDate") / 1000);
-		//maxTimeStamp = $('#max-datepicker').datepicker("getDate") / 1000;
-		/*
-		var selectedDate = $('#photo-datepicker').datepicker("getDate");
-		var yesterday = new Date(selectedDate.getTime() - 24*60*60*1000);
+		var selectedDateUNIX = selectedDate / 1000; //Convert selected date to UNIX time
+		var tomorrowUNIX = tomorrow / 1000; //Convert tomorrow date to UNIX time
 
-		var selectedDateUNIX = selectedDate / 1000;
-		var yesterdayUNIX = yesterday / 1000;
-
-		console.log("Selected Date " + selectedDate);
-		console.log("Date before " + yesterday);
-
-		console.log("Selected Date UNIX " + selectedDateUNIX);
-		console.log("Date before UNIX " + yesterdayUNIX);
-		*/
-		var selectedDate = $('#photo-datepicker').datepicker("getDate");
-		var tomorrow = new Date(selectedDate.getTime() + 24*60*60*1000);
-
-		var selectedDateUNIX = selectedDate / 1000;
-		var tomorrowUNIX = tomorrow / 1000;
-
+		//Debug code to display current selected timestamp information
 		console.log("Selected Date " + selectedDate);
 		console.log("Date tomorrow " + tomorrow);
-
 		console.log("Selected Date UNIX " + selectedDateUNIX);
 		console.log("Date tomorrow UNIX " + tomorrowUNIX);
 
-
-		getPhotoJSON(currentAuthToken,selectedDateUNIX,tomorrowUNIX);
+		getPhotoJSON(currentAuthToken,selectedDateUNIX,tomorrowUNIX); //Pass auth token and dates to getPhotoJSON function
 	});
 
 });
 
-/*
-function logOutOfIG() {
-	$.get('http://instagram.com/accounts/logout/');
-}
-*/
-
+//Function that takes the URL parameter, strips out and returns the authorization token
 function getAuthCodeFromURL(variable)
 {
     var begin = variable.indexOf('=') + 1;
@@ -69,42 +42,41 @@ function getAuthCodeFromURL(variable)
     return accessToken;
 }
 
+
+//Function that takes auth token and timestamps to update the DOM with returned photos
 function getPhotoJSON(currentToken, minStamp, maxStamp) {
+	//Define request object with AJAX call parameters
 	var request = {access_token: currentToken,
 		min_timestamp: minStamp,
 		max_timestamp: maxStamp,
 		count: 20};
 	
+	//AJAX call to Instagram API endpoint
 	var result = $.ajax({
 		url: "https://api.instagram.com/v1/users/self/media/recent",
 		data: request,
 		dataType: "jsonp",
 		type: "GET",
-		})
+		}) //Once this call is finished, execute the following
 	.done(function(result){
-		//var searchResults = showSearchResults(request.tagged, result.items.length);
-
-		//$('.search-results').html(searchResults);
-
-		var html = '';
-		if(result.data.length == 0)
+		var html = ''; //Define HTML variable to hold photo div elements
+		if(result.data.length == 0) //If no photos are returned
 		{
-			$('.no-photos').show();
+			$('.no-photos').show(); //Show no-photos div
 		}
-		else
+		else //Otherwise
 		{
-			$('.no-photos').hide();
-		}
+			$('.no-photos').hide(); //Hide no-photos div
+		} //Next, iterate through result set
 		$.each(result.data, function(i, item){
-			console.log(item);
-			html += '<div class="photo">';
-			html += '<a href="' + item.link + '" target="newtab"><img src =' + item.images.thumbnail.url + '></a>';
-			html += '<p class="caption">Click image to view in Instagram.</p>';
-			html += '<p>' + item.caption.text + '</p>';
-			html += '<p>' + item.likes.count + ' likes.</p>';
-			html += '</div>';
+			console.log(item); //Debug: output JSON object to console
+			html += '<div class="photo">'; //Begin photo div
+			html += '<a href="' + item.link + '" target="newtab"><img src =' + item.images.thumbnail.url + '></a>'; //Thumbnail link to IG page
+			html += '<p class="caption">Click image to view in Instagram.</p>'; //Caption under thumbnail
+			html += '<p>' + item.caption.text + '</p>'; //Display photo caption text
+			html += '<p>' + item.likes.count + ' likes.</p>'; //Display number of likes for photo
+			html += '</div>'; //Close div
 		});
-		//html += '<a href="' + result.pagination.next_url + '">Next Result Set</a>';
-		$('.photo-container').html(html);
+		$('.photo-container').html(html); //Update the DOM photo-container class to include these elements
 	})
 }

@@ -1,3 +1,10 @@
+<!--
+Chris's Photo Explorer: index.html
+Chris Slaight, 2015
+Main application web page
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,15 +19,7 @@
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 <script>
-/*
-$(function() {
-    $( "#min-datepicker" ).datepicker();
-  });
-
-$(function() {
-    $( "#max-datepicker" ).datepicker();
-  });
-*/
+//Define date picker object for photo date selection
 $(function() {
     $( "#photo-datepicker" ).datepicker();
   });
@@ -36,8 +35,6 @@ $(function() {
 	<div class="submit-range">
 		<p>Select a date to view photos from that day.</p>
 		<form id="submit-date-range">
-		<!-- <input type="text" id="min-datepicker" placeholder="Date From.."> -->
-		<!-- <input type="text" id="max-datepicker" placeholder="Date To.."> -->
 		<input type="text" id="photo-datepicker" placeholder="Select Date..." readonly="true" required>
 		<input type="submit" class="buttons" name="submit-dates" text="Go">
 		</form>
